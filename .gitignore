@@ -1,0 +1,17 @@
+.idea
+.DS_STORE
+.rpt2_cache
+TESTS-*.xml
+
+**/node_modules
+**/coverage
+**/dist
+**/*.tgz
+/test/**/coverage
+/build
+
+**/debug.log
+**/npm-debug.log
+**/lerna-debug.log
+
+test/cypress/integration/example
