@@ -170,3 +170,16 @@
 .embed .embed-description {
   white-space: pre-wrap;
 }
+
+.fields > .field > .field-name {
+  color: white;
+  font-weight: bold;
+}
+
+.field {
+  margin-right: 10px;
+}
+
+.fields.true-inline {
+  max-width: 300px;
+}

@@ -1,105 +1,140 @@
 <template>
     <require from="resources/Skeleton/skeleton.css"></require>
     <require from="resources/custom.css"></require>
-  <div class="container">
-      <h1>${heading}</h1>
-      <form submit.trigger="sendToWebhook()">
-          <p class="bg-${error.color}">${error.msg}</p>
-          <p>${retMessage}</p>
-          <div class="row">
-              <span class="label-body u-pull-right">* marks required fields</span>
-          </div>
-          <div class="row">
-              <label for="Webhook">Webhook *</label>
-              <input type="url" value.bind="senderWebhook" placeholder="Webhook" id="Webhook"  class="u-full-width"
-                  placeholder="https://example.com"
-                  pattern="https://.*" size="30"
-                  required>
-          </div>
-          <div class="row">
-              <div class="four columns">
-                      <label for="sAuthorName">Author-Name *</label>
-                      <input class="u-full-width" type="text" placeholder="Author-Name" id="sAuthorName"  value.bind="senderAuthorName" required>
-              </div>
-              <div class="four columns">
-                      <label for="sAuthorLink">Author-Link</label>
-                      <input class="u-full-width" type="text" placeholder="Author-Link" id="sAuthorLink"  value.bind="senderAuthorLink">
-              </div>
-              <div class="four columns">
-                      <label for="sAuthorImg">Author-Image</label>
-                      <input class="u-full-width" type="text" placeholder="Author-Image" id="sAuthorImg"  value.bind="senderAuthorImage">
-              </div>
-          </div>
-          <div class="row">
-              <div class="four columns">
-                  <label for="colorPicker">Color</label>
-                  <select class="u-full-width" id="colorPicker">
-                      <option value="Option 1">Red</option>
-                      <option value="Option 2">Blue</option>
-                  </select>
-              </div>
-              <div class="four columns">
-                  <label for="Picture">Thumbnail</label>
-                  <input class="u-full-width" type="text" placeholder="Thumbnail" id="Thumbnail"  value.bind="senderThumbnail">
-              </div>
-              <div class="four columns">
-                  <label for="eUrl">Embed-Hyperlink</label>
-                  <input class="u-full-width" type="text" placeholder="url" id="eUrl"  value.bind="senderUrl">
-              </div>
-          </div>
-          <div class="row">
-                  <label for="Title">Title</label>
-                  <input type="text" value.bind="senderTitle" placeholder="Title" id="Title" class="u-full-width">
-          </div>
-          <div class="row">
-              <label for="sContent">Message *</label>
-              <textarea class="u-full-width" placeholder="Fill me up .owo." id="sContent"  value.bind="senderContent" required></textarea>
-          </div>
-          <div class="row">
-                  <label for="Footer">Footer</label>
-                  <input type="text" value.bind="senderFooter" placeholder="Footer" id="Footer"  class="u-full-width">
-          </div>
-          <label class="clear-fields-after-submit">
-              <input type="checkbox" checked.bind="clearData">
-              <span class="label-body">Clear fields after submit</span>
-          </label>
-          <label class="include-author-in-embed">
-              <input type="checkbox" checked.bind="includeAuthorInEmbed">
-              <span class="label-body">Include Author in Embed</span>
-          </label>
-          <button type="submit" class="button-primary">${label_button}</button>
-      </form>
+    <require from="limit-to-inline"></require>
+    <div class="container">
+        <h1>${heading}</h1>
+        <form submit.trigger="sendToWebhook()">
+            <p class="bg-${error.color}">${error.msg}</p>
+            <p>${retMessage}</p>
+            <div class="row">
+                <span class="label-body u-pull-right">* marks required fields</span>
+            </div>
+            <div class="row">
+                <label for="Webhook">Webhook *</label>
+                <input type="url" value.bind="senderWebhook" placeholder="Webhook" id="Webhook" class="u-full-width"
+                    placeholder="https://example.com" pattern="https://.*" size="30" required>
+            </div>
+            <div class="row">
+                <div class="four columns">
+                    <label for="sAuthorName">Author-Name *</label>
+                    <input class="u-full-width" type="text" placeholder="Author-Name" id="sAuthorName"
+                        value.bind="senderAuthorName" required>
+                </div>
+                <div class="four columns">
+                    <label for="sAuthorLink">Author-Link</label>
+                    <input class="u-full-width" type="text" placeholder="Author-Link" id="sAuthorLink"
+                        value.bind="senderAuthorLink">
+                </div>
+                <div class="four columns">
+                    <label for="sAuthorImg">Author-Image</label>
+                    <input class="u-full-width" type="text" placeholder="Author-Image" id="sAuthorImg"
+                        value.bind="senderAuthorImage">
+                </div>
+            </div>
+            <div class="row">
+                <div class="four columns">
+                    <label for="colorPicker">Color</label>
+                    <select class="u-full-width" id="colorPicker" value.bind="senderColor">
+                        <option value.bind="color.code" repeat.for="color of aColors">${color.name}</option>
+                    </select>
+                </div>
+                <div class="four columns">
+                    <label for="Picture">Thumbnail</label>
+                    <input class="u-full-width" type="text" placeholder="Thumbnail" id="Thumbnail"
+                        value.bind="senderThumbnail">
+                </div>
+                <div class="four columns">
+                    <label for="eUrl">Embed-Hyperlink</label>
+                    <input class="u-full-width" type="text" placeholder="url" id="eUrl" value.bind="senderUrl">
+                </div>
+            </div>
+            <div class="row">
+                <label for="Title">Title</label>
+                <input type="text" value.bind="senderTitle" placeholder="Title" id="Title" class="u-full-width">
+            </div>
+            <div class="row">
+                <label for="sContent">Message *</label>
+                <textarea class="u-full-width" placeholder="Fill me up .owo." id="sContent" value.bind="senderContent"
+                    required></textarea>
+            </div>
+            <hr>
+            <div class="row">
+                <button type="button" class="button" click.trigger="addCustomField()">${label_button_add_custom_field}</button>
+                <button type="button" class="button" click.delegate="clearCustomFields()">${label_button_clear_custom_field}</button>
+            </div>
+            <div repeat.for="custom_field of custom_fields" class="row">
+                <div class="four columns">
+                    <input class="u-full-width" type="text" placeholder="name" id="cfName" value.bind="custom_field.name" change.delegate="customFieldHasChanged()">
+                </div>
+                <div class="four columns">
+                    <input class="u-full-width" type="text" placeholder="value" id="cfValue" value.bind="custom_field.value" change.delegate="customFieldHasChanged()">
+                </div>
+                <div class="two columns">
+                    <label>
+                        <input type="checkbox" checked.bind="custom_field.inline" change.delegate="customFieldHasChanged()">
+                        <span class="label-body">Inline</span>
+                    </label>
+                </div>
+                <div class="two columns">
+                    <button type="button" class="button" click.trigger="removeSingleItemFromCustomFields(custom_field)">${label_button_remove_custom_field}</button>
+                </div>
+            </div>
+            <hr>
+            <div class="row">
+                <label for="Footer">Footer</label>
+                <input type="text" value.bind="senderFooter" placeholder="Footer" id="Footer" class="u-full-width">
+            </div>
+            <label class="clear-fields-after-submit">
+                <input type="checkbox" checked.bind="clearData">
+                <span class="label-body">Clear fields after submit</span>
+            </label>
+            <label class="include-author-in-embed">
+                <input type="checkbox" checked.bind="includeAuthorInEmbed">
+                <span class="label-body">Include Author in Embed</span>
+            </label>
+            <button type="submit" class="button button-primary">${label_button_send}</button>
+        </form>
 
-      <h1>Preview</h1>
-      <div class="row">
-          <div class="preview">
-              <div class="wrapper">
-                  <div class="side-colored" style="background-color: rgb(255, 0, 0);"></div>
-                  <div class="embed">
-                      <div class="embed-inner">
-                          <div class="embed-author u-cf" if.bind="includeAuthorInEmbed">
-                              <img class="embed-author-icon u-pull-left" if.bind="senderAuthorImage" src="${senderAuthorImage}">
-                              <a class="embed-author-name" if.bind="senderAuthorLink" href="${senderAuthorLink}">${senderAuthorName}</a>
-                              <span if.bind="!senderAuthorLink">${senderAuthorName}</span>
-                          </div>
-                          <img class="embed-thumb u-pull-right" if.bind="senderThumbnail" src="${senderThumbnail}">
-                          <div class="embed-title">
-                              <a href="${senderUrl}" if.bind="senderUrl">${senderTitle}</a>
-                              <span if.bind="!senderUrl">${senderTitle}</span>
-                          </div>
-                          <div class="embed-description" innerhtml.bind="senderContent | sanitizeHTML"></div>
-                          <!-- <div class="fields">
-                              <div class="field undefined">
-                                  <div class="field-name"></div>
-                                  <div class="field-value">undefined</div>
+        <h1>Preview</h1>
+        <div class="row">
+            <div class="preview">
+                <div class="wrapper">
+                    <div class="side-colored" css="background-color: #${senderColor}"></div>
+                    <div class="embed">
+                        <div class="embed-inner">
+                            <div class="embed-author u-cf" if.bind="includeAuthorInEmbed">
+                                <img class="embed-author-icon u-pull-left" if.bind="senderAuthorImage"
+                                    src="${senderAuthorImage}">
+                                <a class="embed-author-name" if.bind="senderAuthorLink"
+                                    href="${senderAuthorLink}">${senderAuthorName}</a>
+                                <span if.bind="!senderAuthorLink">${senderAuthorName}</span>
+                            </div>
+                            <img class="embed-thumb u-pull-right" if.bind="senderThumbnail" src="${senderThumbnail}">
+                            <div class="embed-title">
+                                <a href="${senderUrl}" if.bind="senderUrl">${senderTitle}</a>
+                                <span if.bind="!senderUrl">${senderTitle}</span>
+                            </div>
+                            <div class="embed-description" innerhtml.bind="senderContent | sanitizeHTML"></div>
+                            <div class="fields true-inline u-cf" >
+                                <div class="field u-pull-left" repeat.for="custom_field of custom_fields_mock | limitToInline:true" >
+                                    <div class="field-name">${custom_field.name}</div>
+                                    <div class="field-value">${custom_field.value}</div>
+                                </div>
+                            </div>
+                            <div class="fields false-inline u-cf" >
+                              <div class="field u-cf u-pull-left" repeat.for="custom_field of custom_fields_mock | limitToInline:false">
+                                  <div class="field-name">${custom_field.name}</div>
+                                  <div class="field-value">${custom_field.value}</div>
                               </div>
-                          </div> -->
-                      <div class="embed-footer">
-                          <span>${senderFooter}</span>
-                      </div></div>
-                  </div>
-              </div>
-              </div>
-          </div>
-      </div>
+                            </div>
+                            <div class="embed-footer">
+                                <span>${senderFooter}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </template>

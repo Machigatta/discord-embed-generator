@@ -1,5 +1,5 @@
 export class Sender {
-    constructor(webhook,author_name,author_link,author_image,oUrl,oContent, oThumbnail, oFooter, oTitle, oColor, includeAuthorInEmbed){
+    constructor(webhook,author_name,author_link,author_image,oUrl,oContent, oThumbnail, oFooter, oTitle, oColor, cFields, includeAuthorInEmbed){
         this.webhook = webhook;
         this.author_name = author_name;
         this.author_link = author_link;
@@ -10,11 +10,12 @@ export class Sender {
         this.oFooter = oFooter;
         this.oTitle = oTitle;
         this.oColor = oColor;
+        this.cFields = cFields;
 
         this.includeAuthorInEmbed = includeAuthorInEmbed;
     }
 
-    sendDataToHook(){
+    sendDataToHook(){        
         let eObject = {
             title: this.oTitle,
             type: "rich",
@@ -26,7 +27,8 @@ export class Sender {
             },
             thumbnail: {
                 url: this.oThumbnail
-            }
+            },
+            fields: this.cFields
         }
 
         if(this.includeAuthorInEmbed){
