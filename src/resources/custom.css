@@ -183,3 +183,10 @@
 .fields.true-inline {
   max-width: 300px;
 }
+
+.embed {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap; 
+  justify-content: space-between;
+}

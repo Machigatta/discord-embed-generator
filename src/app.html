@@ -103,19 +103,24 @@
                     <div class="side-colored" css="background-color: #${senderColor}"></div>
                     <div class="embed">
                         <div class="embed-inner">
-                            <div class="embed-author u-cf" if.bind="includeAuthorInEmbed">
-                                <img class="embed-author-icon u-pull-left" if.bind="senderAuthorImage"
-                                    src="${senderAuthorImage}">
-                                <a class="embed-author-name" if.bind="senderAuthorLink"
-                                    href="${senderAuthorLink}">${senderAuthorName}</a>
-                                <span if.bind="!senderAuthorLink">${senderAuthorName}</span>
+                            <div class="embed-head-author" >
+                                <div class="embed-author u-cf" if.bind="includeAuthorInEmbed">
+                                    <img class="embed-author-icon u-pull-left" if.bind="senderAuthorImage"
+                                        src="${senderAuthorImage}">
+                                    <a class="embed-author-name" if.bind="senderAuthorLink"
+                                        href="${senderAuthorLink}">${senderAuthorName}</a>
+                                    <span if.bind="!senderAuthorLink">${senderAuthorName}</span>
+                                </div>
                             </div>
-                            <img class="embed-thumb u-pull-right" if.bind="senderThumbnail" src="${senderThumbnail}">
-                            <div class="embed-title">
-                                <a href="${senderUrl}" if.bind="senderUrl">${senderTitle}</a>
-                                <span if.bind="!senderUrl">${senderTitle}</span>
+                            <div class="embed-head">
+                                <div class="embed-title">
+                                    <a href="${senderUrl}" if.bind="senderUrl">${senderTitle}</a>
+                                    <span if.bind="!senderUrl">${senderTitle}</span>
+                                </div>
                             </div>
-                            <div class="embed-description" innerhtml.bind="senderContent | sanitizeHTML"></div>
+                            <div class="embed-body">
+                                <div class="embed-description" innerhtml.bind="senderContent | sanitizeHTML"></div>
+                            </div>
                             <div class="fields true-inline u-cf" >
                                 <div class="field u-pull-left" repeat.for="custom_field of custom_fields_mock | limitToInline:true" >
                                     <div class="field-name">${custom_field.name}</div>
@@ -131,6 +136,9 @@
                             <div class="embed-footer">
                                 <span>${senderFooter}</span>
                             </div>
+                        </div>
+                        <div class="embed-right">
+                            <img class="embed-thumb u-pull-right" if.bind="senderThumbnail" src="${senderThumbnail}">
                         </div>
                     </div>
                 </div>
