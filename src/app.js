@@ -14,6 +14,9 @@ export class App {
         this.label_button_add_custom_field = 'Add custom field';
         this.label_button_remove_custom_field = 'Remove';
         this.label_button_clear_custom_field = 'Clear custom fields';
+        this.label_button_fill_with_demo_data = 'Demo-Data';
+        this.label_button_reset_all_fields = 'Reset all Fields';
+
         this.currentCodePreview = 'PHP';
 
         //Author Block
@@ -33,7 +36,7 @@ export class App {
         //validate block
         this.retMessage = '';
         this.clearData = false;
-        this.includeAuthorInEmbed = false;
+        this.includeAuthorInEmbed = true;
         this.custom_fields = new Set();
         this.custom_fields_mock = new Set();
         this.aColors = [
@@ -176,19 +179,7 @@ export class App {
 
             if(this.clearData){
             //Author Block
-                this.senderAuthorName = ''
-                this.senderAuthorLink = ''
-                this.senderAuthorImage = ''
-
-                //meta block
-                this.senderWebhook = '';
-                this.senderUrl = '';
-                this.senderContent = '';
-                this.senderThumbnail = '';
-                this.senderFooter = '';
-                this.senderTitle = '';
-                this.senderColor = 0;
-                this.custom_fields.clear();
+                this.resetAllFields();
             }
         }
         this.label_button_send = 'Send to webhook';
@@ -221,5 +212,38 @@ export class App {
 
         //cURL
         this.examplecURL = Prism.highlight(exg.prepare_cURL(),Prism.languages.shell,'shell');
+    }
+
+    resetAllFields(){
+        this.senderAuthorName = ''
+        this.senderAuthorLink = ''
+        this.senderAuthorImage = ''
+
+        //meta block
+        this.senderWebhook = '';
+        this.senderUrl = '';
+        this.senderContent = '';
+        this.senderThumbnail = '';
+        this.senderFooter = '';
+        this.senderTitle = '';
+        this.senderColor = 'ff0000';
+        this.custom_fields.clear();
+    }
+
+    fillWithDemoData(){
+        this.senderAuthorName = 'OwO'
+        this.senderAuthorLink = 'https://machigatta.com'
+        this.senderAuthorImage = 'https://images.discordapp.net/avatars/408785106942164992/7f7a07bfad0ad6a2faaaccd9421e5392.png?size=512'
+
+        //meta block
+        this.senderWebhook = '';
+        this.senderUrl = '';
+        this.senderContent = `Fill me up OwO\n\nHinata Hyuga > Rikka Takanashi > Rest of your shit waifus `;
+        this.senderThumbnail = 'http://2.bp.blogspot.com/-FR9zuHg5Ly0/U1XvSva4KiI/AAAAAAAAAWw/tgaemJdbJ50/h300/Rikka+(Render+188).png';
+        this.senderFooter = '';
+        this.senderTitle = '';
+        this.senderColor = 'ff0000';
+        this.includeAuthorInEmbed = true;
+        this.custom_fields.clear();
     }
 }

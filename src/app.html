@@ -99,7 +99,13 @@
             <button type="submit" class="button button-primary">${label_button_send}</button>
         </form>
         <hr>
-        <h1>Preview</h1>
+        <h1>Preview 
+            <div class="u-pull-right">
+                <button type="button" class="button" click.trigger="fillWithDemoData()">${label_button_fill_with_demo_data}</button>
+                <button type="button" class="button" click.trigger="resetAllFields()">${label_button_reset_all_fields}</button>
+            </div>
+            
+        </h1>
         <div class="row">
             <div class="preview">
                 <div class="wrapper">
