@@ -143,6 +143,6 @@ embed.set_author(name="${this.author_name}", url="${this.author_link}",, icon_ur
 `+(this.oThumbnail != "" ? `embed.set_thumbnail(url="${this.oThumbnail}")` : ``)+`
 `+fieldsArray.join("\n")+`
 `+(this.oFooter != "" ? `embed.set_footer(text="${this.oFooter}")` : ``)+`
-await self.bot.say(embed=embed)`;
+await channel.send(embed=embed)`;
     }
 }
