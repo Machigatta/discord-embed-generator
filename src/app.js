@@ -1,12 +1,20 @@
 import {Sender} from './sender';
+import {ExampleGen} from './example';
+import {BindingEngine} from 'aurelia-framework';
+import Prism from 'prismjs';
+import { isPrimitive } from 'util';
 
 export class App {
-    constructor(){
+    static inject = [BindingEngine];
+
+    constructor(bindingEngine){
+        this.bindingEngine = bindingEngine;
         this.heading = "Send your stuff to Discord via Embeds";
         this.label_button_send = 'Send to webhook';
         this.label_button_add_custom_field = 'Add custom field';
         this.label_button_remove_custom_field = 'Remove';
         this.label_button_clear_custom_field = 'Clear custom fields';
+        this.currentCodePreview = 'PHP';
 
         //Author Block
         this.senderAuthorName = ''
@@ -42,7 +50,75 @@ export class App {
             msg: "",
             color: ""
         };
-        
+
+        this.exampleJS = "";
+        this.examplePHP = "";
+        this.examplePython = "coming soon";
+        this.examplecURL = "";
+    }
+
+    attached() {
+        this.buildExamples();
+        this.subscription = this.bindingEngine
+            .propertyObserver(this, 'senderTitle')
+            .subscribe((newValue, oldValue) => { 
+                this.buildExamples();
+            });
+        this.subscription = this.bindingEngine
+            .propertyObserver(this, 'senderFooter')
+            .subscribe((newValue, oldValue) => { 
+                this.buildExamples();
+            });
+        this.subscription = this.bindingEngine
+            .propertyObserver(this, 'senderColor')
+            .subscribe((newValue, oldValue) => { 
+                this.buildExamples();
+            });
+        this.subscription = this.bindingEngine
+            .propertyObserver(this, 'senderThumbnail')
+            .subscribe((newValue, oldValue) => { 
+                this.buildExamples();
+            });
+        this.subscription = this.bindingEngine
+            .propertyObserver(this, 'senderContent')
+            .subscribe((newValue, oldValue) => { 
+                this.buildExamples();
+            });
+        this.subscription = this.bindingEngine
+            .propertyObserver(this, 'senderUrl')
+            .subscribe((newValue, oldValue) => { 
+                this.buildExamples();
+            });
+        this.subscription = this.bindingEngine
+            .propertyObserver(this, 'senderWebhook')
+            .subscribe((newValue, oldValue) => { 
+                this.buildExamples();
+            });
+        this.subscription = this.bindingEngine
+            .propertyObserver(this, 'senderAuthorImage')
+            .subscribe((newValue, oldValue) => { 
+                this.buildExamples();
+            });
+        this.subscription = this.bindingEngine
+            .propertyObserver(this, 'senderAuthorLink')
+            .subscribe((newValue, oldValue) => { 
+                this.buildExamples();
+            });
+        this.subscription = this.bindingEngine
+            .propertyObserver(this, 'senderAuthorName')
+            .subscribe((newValue, oldValue) => { 
+                this.buildExamples();
+            });
+        this.subscription = this.bindingEngine
+            .propertyObserver(this, 'includeAuthorInEmbed')
+            .subscribe((newValue, oldValue) => { 
+                this.buildExamples();
+            });
+        this.subscription = this.bindingEngine
+            .propertyObserver(this, 'includeAuthorInEmbed')
+            .subscribe((newValue, oldValue) => { 
+                this.buildExamples();
+            });
     }
 
     validate_fields(){
@@ -64,24 +140,27 @@ export class App {
     }
 
     customFieldHasChanged(){
-        //really dirty
         this.custom_fields_mock = new Set(this.custom_fields);
-        
+        this.buildExamples();
     }
 
     addCustomField(){
         this.custom_fields.add({name:"",value:"", inline: true});
-        //this.customFieldHasChanged();
+        this.buildExamples();
     }
 
     clearCustomFields(){
         this.custom_fields.clear();
-        //this.customFieldHasChanged();
+        this.buildExamples();
     }
 
     removeSingleItemFromCustomFields(cObj){
         this.custom_fields.delete(cObj);
-        //this.customFieldHasChanged();
+        this.buildExamples();
+    }
+
+    changeCurrentCodePreview(name) {
+        this.currentCodePreview = name;
     }
 
     sendToWebhook(){
@@ -113,5 +192,34 @@ export class App {
             }
         }
         this.label_button_send = 'Send to webhook';
+    }
+
+    buildExamples(){
+
+        let exg = new ExampleGen(this.senderWebhook,
+            this.senderAuthorName,
+            this.senderAuthorLink,
+            this.senderAuthorImage,
+            this.senderUrl,
+            this.senderContent,
+            this.senderThumbnail,
+            this.senderFooter,
+            this.senderTitle,
+            this.senderColor,
+            this.custom_fields,
+            this.includeAuthorInEmbed);
+
+
+        // JS
+        this.exampleJS = Prism.highlight(exg.prepare_JavaScript(),Prism.languages.javascript,'javascript');
+
+        //PHP
+        this.examplePHP = Prism.highlight(exg.prepare_PHP(),Prism.languages.php,'php');
+            
+        //python
+        this.examplePython = Prism.highlight(exg.prepare_Python(),Prism.languages.python,'python');
+
+        //cURL
+        this.examplecURL = Prism.highlight(exg.prepare_cURL(),Prism.languages.shell,'shell');
     }
 }

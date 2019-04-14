@@ -2,6 +2,9 @@
     <require from="resources/Skeleton/skeleton.css"></require>
     <require from="resources/custom.css"></require>
     <require from="limit-to-inline"></require>
+    <require from="is-equals-to"></require>
+    <require from="prismjs/themes/prism-okaidia.css"></require>
+
     <div class="container">
         <h1>${heading}</h1>
         <form submit.trigger="sendToWebhook()">
@@ -23,12 +26,12 @@
                 </div>
                 <div class="four columns">
                     <label for="sAuthorLink">Author-Link</label>
-                    <input class="u-full-width" type="text" placeholder="Author-Link" id="sAuthorLink"
+                    <input class="u-full-width" type="url" pattern="https?://.+" required placeholder="https://myhome.com/" id="sAuthorLink"
                         value.bind="senderAuthorLink">
                 </div>
                 <div class="four columns">
                     <label for="sAuthorImg">Author-Image</label>
-                    <input class="u-full-width" type="text" placeholder="Author-Image" id="sAuthorImg"
+                    <input class="u-full-width" type="url" pattern="https?://.+" required placeholder="https://myhome.com/me.jpg" id="sAuthorImg"
                         value.bind="senderAuthorImage">
                 </div>
             </div>
@@ -41,12 +44,12 @@
                 </div>
                 <div class="four columns">
                     <label for="Picture">Thumbnail</label>
-                    <input class="u-full-width" type="text" placeholder="Thumbnail" id="Thumbnail"
+                    <input class="u-full-width" type="url" pattern="https?://.+" placeholder="https://mytargetthumbnail.com/" id="Thumbnail"
                         value.bind="senderThumbnail">
                 </div>
                 <div class="four columns">
                     <label for="eUrl">Embed-Hyperlink</label>
-                    <input class="u-full-width" type="text" placeholder="url" id="eUrl" value.bind="senderUrl">
+                    <input class="u-full-width" type="url" pattern="https?://.+" placeholder="https://mytarget.com/" id="eUrl" value.bind="senderUrl">
                 </div>
             </div>
             <div class="row">
@@ -95,7 +98,7 @@
             </label>
             <button type="submit" class="button button-primary">${label_button_send}</button>
         </form>
-
+        <hr>
         <h1>Preview</h1>
         <div class="row">
             <div class="preview">
@@ -142,6 +145,31 @@
                         </div>
                     </div>
                 </div>
+            </div>
+        </div>
+        <hr>
+        <h1>Programming Examples <small>${currentCodePreview}</small></h1>
+        <div class="row">
+            <div class="tab">
+                <button class="tablinks" click.trigger="changeCurrentCodePreview('PHP')">PHP</button>
+                <button class="tablinks" click.trigger="changeCurrentCodePreview('JavaScript')">JavaScript</button>
+                <button class="tablinks" click.trigger="changeCurrentCodePreview('Python')">Python</button>
+                <button class="tablinks" click.trigger="changeCurrentCodePreview('cURL')">cURL</button>
+            </div>
+                
+            <div id="PHP" class="tabcontent" if.bind="'PHP' | isEqualsTo:currentCodePreview">
+                <pre class="language-php"><code class="language-php" innerhtml.bind="examplePHP"></code></pre>
+            </div>
+            
+            <div id="JavaScript" class="tabcontent" if.bind="'JavaScript' | isEqualsTo:currentCodePreview">
+                <pre class="language-js"><code class="language-js" innerhtml.bind="exampleJS"></code></pre>
+            </div>
+            <div id="python" class="tabcontent" if.bind="'Python' | isEqualsTo:currentCodePreview">
+                <pre class="language-python" ><code class="language-python" innerhtml.bind="examplePython"></code></pre>
+            </div>
+
+            <div id="cURL" class="tabcontent" if.bind="'cURL' | isEqualsTo:currentCodePreview">
+                <pre class="language-shell" ><code class="language-shell" innerhtml.bind="examplecURL"></code></pre>
             </div>
         </div>
     </div>

@@ -15,7 +15,7 @@ export class Sender {
         this.includeAuthorInEmbed = includeAuthorInEmbed;
     }
 
-    sendDataToHook(){        
+    prepareObject(){
         let eObject = {
             title: this.oTitle,
             type: "rich",
@@ -39,17 +39,21 @@ export class Sender {
             }
         }
 
-        var xhr = new XMLHttpRequest();
-        xhr.open("POST", this.webhook, true);
-        xhr.setRequestHeader('Content-Type', 'application/json');
-        xhr.send(JSON.stringify({
+        return {
             username: this.author_name,
             avatar_url: this.author_image,
             content: "",
             embeds: [
                 eObject
             ]
-        }));
+        }
+    }
+
+    sendDataToHook(){        
+        var xhr = new XMLHttpRequest();
+        xhr.open("POST", this.webhook, true);
+        xhr.setRequestHeader('Content-Type', 'application/json');
+        xhr.send(JSON.stringify(this.prepareObject()));
         xhr.onload = function() {
             if(this.responseText){
                 console.log(this.responseText);

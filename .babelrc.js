@@ -8,7 +8,13 @@ module.exports = api => {
   return {
     "plugins": [
       ['@babel/plugin-proposal-decorators', { legacy: true }],
-      ['@babel/plugin-proposal-class-properties', { loose: true }]
+      ['@babel/plugin-proposal-class-properties', { loose: true }],
+      ["prismjs", {
+        "languages": ["javascript", "css", "python", "php", "bash"],
+        "plugins": ["line-numbers"],
+        "theme": "okaidia",
+        "css": true
+      }]
     ],
     "presets": [
       [
