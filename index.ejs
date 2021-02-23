@@ -1,12 +1,20 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
-    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <link rel="icon" type="image/png" sizes="16x16" href="/static/favicon.ico">
+    <link rel="apple-touch-icon" sizes="180x180" href="/static/favicon.ico">
+    <link href="/static/favicon.ico" rel="shortcut icon" type="image/x-icon" >
     <title><%- htmlWebpackPlugin.options.metadata.title %></title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Build custom Embeds and send them to your Discord-Webhook. With Codeexamples for PHP, JavaScript, Python and cURL.">
     <base href="<%- htmlWebpackPlugin.options.metadata.baseUrl %>">
     <!-- imported CSS are concatenated and added automatically -->
   </head>
   <body aurelia-app="main">
+    <div style="display: none;">
+      <h1>Custom Embed to Discord</h1>
+      <p>Build custom Embeds and send them to your Discord-Webhook. With Codeexamples for PHP, JavaScript, Python and cURL.</p>
+    </div>
   </body>
 </html>
