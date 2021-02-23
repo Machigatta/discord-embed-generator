@@ -130,6 +130,23 @@ curl_close( $ch );
 return $response;`
     }
 
+    prepare_Python_with_Library(){
+
+        let fieldsArray = [];
+        this.cFields.forEach(element => {
+            fieldsArray.push(`embed.add_field(name="${element.name}", value="${element.value}", inline=${element.inline})`);
+        });
+
+return `#using discord.py
+embed=discord.Embed(title="${this.oTitle}", url="${this.oUrl}", description="${this.oContent}", color=0x${this.oColor})
+embed.set_author(name="${this.author_name}", url="${this.author_link}",, icon_url="${this.author_image}")
+`+(this.oThumbnail != "" ? `embed.set_thumbnail(url="${this.oThumbnail}")` : ``)+`
+`+fieldsArray.join("\n")+`
+`+(this.oFooter != "" ? `embed.set_footer(text="${this.oFooter}")` : ``)+`
+await channel.send(embed=embed)`;
+    }
+
+
     prepare_Python(){
 
         let fieldsArray = [];
@@ -151,7 +168,7 @@ data = {
 
 data["embeds"] = [
     {
-        "description" : "${this.oContent}",
+        "description" : """${this.oContent}""",
         "title" : "${this.oTitle}",
         "type": "rich",
         "url": "${this.oUrl}",

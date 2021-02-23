@@ -215,6 +215,7 @@ export class App {
             
         //python
         this.examplePython = Prism.highlight(exg.prepare_Python(),Prism.languages.python,'python');
+        this.examplePythonWithLibrary = Prism.highlight(exg.prepare_Python_with_Library(),Prism.languages.python,'python');
 
         //cURL
         this.examplecURL = Prism.highlight(exg.prepare_cURL(),Prism.languages.shell,'shell');
