@@ -11,7 +11,7 @@ Feels free to work on this small project
 
 ## Work-Enviroment
 
-Run `au run`, then open `http://localhost:8080`
+Run `au run`, then open `http://localhost:8000`
 
 
 ## Build

@@ -1,6 +1,7 @@
 import {Sender} from './sender';
 import {ExampleGen} from './example';
 import {BindingEngine} from 'aurelia-framework';
+import SkeletonTabs from "./resources/Skeleton/skeleton-tabs";
 import Prism from 'prismjs';
 import { isPrimitive } from 'util';
 
@@ -9,15 +10,13 @@ export class App {
 
     constructor(bindingEngine){
         this.bindingEngine = bindingEngine;
-        this.heading = "Send your stuff to Discord via Embeds";
+        this.heading = "Custom Embed to Discord";
         this.label_button_send = 'Send to webhook';
         this.label_button_add_custom_field = 'Add custom field';
         this.label_button_remove_custom_field = 'Remove';
         this.label_button_clear_custom_field = 'Clear custom fields';
         this.label_button_fill_with_demo_data = 'Demo-Data';
         this.label_button_reset_all_fields = 'Reset all Fields';
-
-        this.currentCodePreview = 'PHP';
 
         //Author Block
         this.senderAuthorName = ''
@@ -122,6 +121,18 @@ export class App {
             .subscribe((newValue, oldValue) => { 
                 this.buildExamples();
             });
+
+            var tabButtons = [].slice.call(document.querySelectorAll('ul.tab-nav li a.button'));
+
+            tabButtons.map(function(button) {
+                button.addEventListener('click', function() {
+                    document.querySelector('li a.active.button').classList.remove('active');
+                    button.classList.add('active');
+    
+                    document.querySelector('.tab-pane.active').classList.remove('active');
+                    document.querySelector(button.getAttribute('href')).classList.add('active');
+                })
+            })
     }
 
     validate_fields(){
@@ -160,10 +171,6 @@ export class App {
     removeSingleItemFromCustomFields(cObj){
         this.custom_fields.delete(cObj);
         this.buildExamples();
-    }
-
-    changeCurrentCodePreview(name) {
-        this.currentCodePreview = name;
     }
 
     sendToWebhook(){
