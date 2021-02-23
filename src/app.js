@@ -1,7 +1,6 @@
 import {Sender} from './sender';
 import {ExampleGen} from './example';
 import {BindingEngine} from 'aurelia-framework';
-import SkeletonTabs from "./resources/Skeleton/skeleton-tabs";
 import Prism from 'prismjs';
 import { isPrimitive } from 'util';
 
