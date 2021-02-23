@@ -134,15 +134,52 @@ return $response;`
 
         let fieldsArray = [];
         this.cFields.forEach(element => {
-            fieldsArray.push(`embed.add_field(name="${element.name}", value="${element.value}", inline=${element.inline})`);
+            fieldsArray.push(`{
+                "name": "${element.name}",
+                "value": "${element.value}",
+                "inline": "${element.inline}"
+            }`);
         });
 
-return `#using discord.py
-embed=discord.Embed(title="${this.oTitle}", url="${this.oUrl}", description="${this.oContent}", color=0x${this.oColor})
-embed.set_author(name="${this.author_name}", url="${this.author_link}",, icon_url="${this.author_image}")
-`+(this.oThumbnail != "" ? `embed.set_thumbnail(url="${this.oThumbnail}")` : ``)+`
-`+fieldsArray.join("\n")+`
-`+(this.oFooter != "" ? `embed.set_footer(text="${this.oFooter}")` : ``)+`
-await channel.send(embed=embed)`;
+return `import requests
+
+url = "${this.webhook}"
+data = {
+    "username": "${this.author_name}",
+    "avatar_url": "${this.author_image}"
+}
+
+data["embeds"] = [
+    {
+        "description" : "${this.oContent}",
+        "title" : "${this.oTitle}",
+        "type": "rich",
+        "url": "${this.oUrl}",
+        "color": int("${this.oColor}", 16),
+        "footer": {
+            "text": "${this.oFooter}"
+        },
+        "thumbnail": {
+            "url": "${this.oThumbnail}"
+        },
+        "author": {
+            "name": "${this.author_name}",
+            "url": "${this.author_link}",
+            "icon_url": "${this.author_image}"
+        },
+        "fields": [
+            ${fieldsArray.join(",")}
+        ]
+    }
+]
+
+result = requests.post(url, json = data)
+
+try:
+    result.raise_for_status()
+except requests.exceptions.HTTPError as err:
+    #error
+else:
+    #success`;
     }
 }
