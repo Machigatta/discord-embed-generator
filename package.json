@@ -11,7 +11,7 @@
     "aurelia-animator-css": "^1.0.4",
     "aurelia-bootstrapper": "^2.3.3",
     "babel-plugin-prismjs": "^1.1.1",
-    "prismjs": "^1.23.0"
+    "prismjs": "^1.27.0"
   },
   "devDependencies": {
     "@babel/core": "^7.13.1",
